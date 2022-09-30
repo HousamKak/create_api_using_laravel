@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RandomApiController extends Controller{
+class RandomApiController extends Controller
+{
 
     // For my learning:
     // I initialize a function with the usual syntax
@@ -29,15 +30,17 @@ class RandomApiController extends Controller{
     //     return "HI From a Controller";
     // }
 
+    // $name = "Laravel"
+    function sayHi()
+    {
+        $message = "HI";
+        // . $name;
 
-    // function sayHi($name = "Laravel"){
-    //     $message = "HI " . $name;
-
-    //     return response()->json([
-    //         "status" => "Success",
-    //         "message" => $message
-    //     ]);
-    // }
+        return response()->json([
+            "status" => "Success",
+            "message" => $message
+        ]);
+    }
 
     // function addUser(Request $request){
     //     $name = $request->name;
@@ -49,6 +52,11 @@ class RandomApiController extends Controller{
     //     ]);
     // }
 
-
-    
+    function sortArray($array)
+    {
+        return response()->json([
+            "status" => "Success",
+            "sortedArray" => asort($array)
+        ]);
+    }
 }
