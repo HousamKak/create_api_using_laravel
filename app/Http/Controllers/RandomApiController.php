@@ -202,11 +202,51 @@ class RandomApiController extends Controller
     // Doing the function by recursion because it resembles a tree
     function recursive_evalPrefix($string)
     {
+        // Base case
         if (is_numeric($string)) {
             return intval($string);
         }
+        // Removing spaces from the string
         $array = explode(' ', $string);
-        for ($i = 1; $i < count($array) + 1; $i++) {
+        // Constructing a new string
+        $new_string = '';
+        for ($i = 0; $i < count($array); $i++) {
+            $new_string .= $array[$i];
+        }
+        // 
+        for ($i = 2; $i <= strlen($new_string); $i++) {
+
+            // Addition Condition
+            if ($new_string[$i - 2] == '+') {
+                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
+                    $result = $new_string[$i - 1] + $new_string[$i];
+                }
+            }
+
+            // Multiplication Condition
+            if ($new_string[$i - 2] == '*') {
+                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
+                    $result = $new_string[$i - 1] * $new_string[$i];
+                }
+            }
+
+            // Subtraction Condition
+            if ($new_string[$i - 2] == '-') {
+                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
+                    $result = $new_string[$i - 1] - $new_string[$i];
+                }
+            }
+
+            // Division Condition
+            if ($new_string[$i - 2] == '/') {
+                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
+                    if ($new_string[$i] != 0) {
+                        $result = $new_string[$i - 1] / $new_string[$i];
+                    } else {
+                        return "Please check your input";
+                    }
+                }
+            }
         }
     }
 }
