@@ -147,19 +147,25 @@ class RandomApiController extends Controller
         // Initialize a counter that will reset every time we hit a new consequetive sequence of numbers
         $counter = 0;
         // Loop over the string
-        for ($i = 1; $i < strlen($string)+1; $i++) {
+        for ($i = 1; $i < strlen($string) + 1; $i++) {
 
             // Start checking each element for being a numeric
             // If a numeric hits we enter the logic
             if (is_numeric($string[$i - 1])) {
+                // This allows us to initialize a variable to store the number each time a number occurs
                 if ($counter == 0) {
                     $num = '';
                 }
+                // Here we are keeping count on the number of numerics
+                // We are also saving the numerics in the $num variable
                 $counter++;
                 $num .= $string[$i - 1];
+                // We check here if the current index is not a numeric, then we should've stopped on the previous one
+                // we convert the string to decimal, and then the decimal to binary, and append to the new string
+                // we reset the counter for this process to repeat
                 if (!is_numeric($string[$i])) {
-                    $new_string .= $num;
-                    // $this->makeBin($num);
+                    $decimal = intval($num);
+                    $new_string .= decbin($decimal);
                     $counter = 0;
                 } else {
                     continue;
@@ -175,8 +181,5 @@ class RandomApiController extends Controller
             "status" => "Success",
             "toBinary" => $new_string
         ]);
-    }
-    function makeBin($num)
-    {
     }
 }
