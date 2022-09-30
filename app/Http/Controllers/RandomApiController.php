@@ -54,7 +54,7 @@ class RandomApiController extends Controller
 
     function sortArray($string)
     {
-        // Seperate letters and numbers
+        // Seperate numbers and letters
         $numeric_array = [];
         $letter_array = [];
         for ($x = 0; $x < strlen($string); $x++) {
@@ -67,9 +67,14 @@ class RandomApiController extends Controller
                 array_push($letter_array, $string[$x]);
             }
         };
+
         // sort the numbers
         asort($numeric_array);
-
+        // Find the sorted array
+        $reindexed_numeric_array = [];
+        foreach ($numeric_array as $numer) {
+            array_push($reindexed_numeric_array, $numer);
+        }
 
         // Change the letters into numbers 
         $letter_numerics = [];
@@ -79,8 +84,18 @@ class RandomApiController extends Controller
 
         // Sort the transformed array
         asort($letter_numerics);
+        // Find the sorted transformed array
+        $reindexed_letter_numerics = [];
+        foreach ($letter_numerics as $numer) {
+            array_push($reindexed_letter_numerics, $numer);
+        }
 
-
+        // Inverting the numerics to letters
+        $sorted_letters = [];
+        for ($i = 0; $i < count($letter_numerics); $i++) {
+            array_push($sorted_letters, numsToLetters($reindexed_letter_numerics[$i]));
+        };
+    
         // lower are from 97 to 122, upper are from 65 to 90
         // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
         // input the letter to the mapping function, and it will output a number
@@ -98,7 +113,13 @@ class RandomApiController extends Controller
 
         function numsToLetters($num)
         {
+            if ($num % 2 == 0) {
+                return chr(($num - 2) / 2 + 65);
+            } else {
+                return chr(($num - 1) / 2 + 97);
+            }
         }
+
 
 
         return response()->json([
