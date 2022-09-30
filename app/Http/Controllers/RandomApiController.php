@@ -139,36 +139,42 @@ class RandomApiController extends Controller
 
 
     // The Third API:
+    // "My father was born in 1974.10.25."
     function numToBinary($string = "My father was born in 1974.10.25.")
-    {   
+    {
         // Initialize an empty string that will follow with the initial string
         $new_string = "";
         // Initialize a counter that will reset every time we hit a new consequetive sequence of numbers
         $counter = 0;
         // Loop over the string
-        for ($i = 1; $i < strlen($string); $i++) {
-            
+        for ($i = 1; $i < strlen($string)+1; $i++) {
+
             // Start checking each element for being a numeric
             // If a numeric hits we enter the logic
             if (is_numeric($string[$i - 1])) {
                 if ($counter == 0) {
-                    $starting_ind = $i - 1;
                     $num = '';
                 }
                 $counter++;
                 $num .= $string[$i - 1];
                 if (!is_numeric($string[$i])) {
-                    $ending_ind = $i - 1;
-                    $this->makeBin($num);
+                    $new_string .= $num;
+                    // $this->makeBin($num);
                     $counter = 0;
                 } else {
+                    continue;
                 }
-            } 
+            }
             // If we don't hit a numeric, we append the string to our new constructed string
             else {
                 $new_string .= $string[$i - 1];
             }
         }
+
+        return response()->json([
+            "status" => "Success",
+            "toBinary" => $new_string
+        ]);
     }
     function makeBin($num)
     {
