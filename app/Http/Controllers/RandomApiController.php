@@ -135,4 +135,25 @@ class RandomApiController extends Controller
             return chr(($num - 1) / 2 + 97);
         }
     }
+
+
+    function numExplode($num)
+    {
+        $places = [];
+        if ($num > 0) {
+
+            $key_value = $num;
+            while ($key_value>0) {
+                $key_value = $key_value / 10;
+                array_unshift($places, $num - 10 * floor($num / 10));
+            }
+        } else {
+            return 'hi';
+        }
+
+        return response()->json([
+            "status" => "Success",
+            "sortedArray" => $places
+        ]);
+    }
 }
