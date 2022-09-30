@@ -1,4 +1,20 @@
 <?php
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// For my learning:
+// I initialize a function with the usual syntax
+// I return a json object using:
+// return response()->json([
+//     "status" => "Success",
+//     "message" => $message
+// ]);
+
+//  I can initialize variables inside the function
+//  I can request data by inputting:
+// function functionName(Request $request){
+//         $name = $request->name;
+//         $age = $request->age;
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace App\Http\Controllers;
 
@@ -6,52 +22,9 @@ use Illuminate\Http\Request;
 
 class RandomApiController extends Controller
 {
-
-    // For my learning:
-    // I initialize a function with the usual syntax
-    // I return a json object using:
-    // return response()->json([
-    //     "status" => "Success",
-    //     "message" => $message
-    // ]);
-
-    //  I can initialize variables inside the function
-    //  I can request data by inputting:
-    // function functionName(Request $request){
-    //         $name = $request->name;
-    //         $age = $request->age;
-    // }
-
-
-
-    // workshop examples:
-
-    // function getUsers(){
-    //     return "HI From a Controller";
-    // }
-
-    // $name = "Laravel"
-    // function sayHi()
-    // {
-    //     $message = "HI";
-    //     // . $name;
-
-    //     return response()->json([
-    //         "status" => "Success",
-    //         "message" => $message
-    //     ]);
-    // }
-
-    // function addUser(Request $request){
-    //     $name = $request->name;
-    //     $age = $request->age;
-
-    //     return response()->json([
-    //         "status" => "Success",
-    //         "message" => $age
-    //     ]);
-    // }
-
+    // first API:
+    // Create an API that receives a string consisting of lowercase letters,
+    // uppercase letters and numbers and returns the string sorted (in a JSON object)
     function sortString($string = "6jnM31Q")
     {
         // Seperate numbers and letters
@@ -105,18 +78,18 @@ class RandomApiController extends Controller
             $sorted_string .= $reindexed_numeric_array[$i];
         }
 
-
-        // lower are from 97 to 122, upper are from 65 to 90
-        // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
-        // input the letter to the mapping function, and it will output a number
-        // sort the outputs and reverse the mapping
-
         return response()->json([
             "status" => "Success",
             "sortedArray" => $sorted_string
         ]);
     }
 
+
+    // lower are from 97 to 122, upper are from 65 to 90
+    // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
+    // input the letter to the mapping function, and it will output a number
+    // sort the outputs and reverse the mapping
+    
     function lettersToNums($letter)
     {
         $value = ord($letter);
@@ -137,6 +110,8 @@ class RandomApiController extends Controller
     }
 
 
+    // The Second API:
+    // Create an API that recives a number $num and returns each place value in the number.
     function numExplode($num = -434)
     {
         $places = [];
