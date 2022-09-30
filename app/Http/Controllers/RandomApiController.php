@@ -142,24 +142,22 @@ class RandomApiController extends Controller
         $places = [];
         if ($num < 0) {
             $sign = -1;
+            $num = -$num;
         } else {
             $sign = 1;
         }
 
         $key_value = $num;
         $counter = 0;
-        while ($key_value > 1) {
+        while ($key_value >= 1) {
             array_unshift($places, $sign * ($key_value - 10 * floor($key_value / 10)) * (10 ** $counter));
             $counter++;
             $key_value = floor($key_value / 10);
-            print($key_value);
-            print("\n");
         }
-
 
         return response()->json([
             "status" => "Success",
-            "sortedArray" => $places
+            "Exploded View" => $places
         ]);
     }
 }
