@@ -89,7 +89,7 @@ class RandomApiController extends Controller
     // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
     // input the letter to the mapping function, and it will output a number
     // sort the outputs and reverse the mapping
-    
+
     function lettersToNums($letter)
     {
         $value = ord($letter);
@@ -134,5 +134,43 @@ class RandomApiController extends Controller
             "status" => "Success",
             "Exploded View" => $places
         ]);
+    }
+
+
+
+    // The Third API:
+    function numToBinary($string = "My father was born in 1974.10.25.")
+    {   
+        // Initialize an empty string that will follow with the initial string
+        $new_string = "";
+        // Initialize a counter that will reset every time we hit a new consequetive sequence of numbers
+        $counter = 0;
+        // Loop over the string
+        for ($i = 1; $i < strlen($string); $i++) {
+            
+            // Start checking each element for being a numeric
+            // If a numeric hits we enter the logic
+            if (is_numeric($string[$i - 1])) {
+                if ($counter == 0) {
+                    $starting_ind = $i - 1;
+                    $num = '';
+                }
+                $counter++;
+                $num .= $string[$i - 1];
+                if (!is_numeric($string[$i])) {
+                    $ending_ind = $i - 1;
+                    $this->makeBin($num);
+                    $counter = 0;
+                } else {
+                }
+            } 
+            // If we don't hit a numeric, we append the string to our new constructed string
+            else {
+                $new_string .= $string[$i - 1];
+            }
+        }
+    }
+    function makeBin($num)
+    {
     }
 }
