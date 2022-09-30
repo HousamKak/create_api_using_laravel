@@ -98,6 +98,13 @@ class RandomApiController extends Controller
 
         // Combine into one string
         $sorted_string = '';
+        for ($i = 0; $i < count($sorted_letters); $i++) {
+            $sorted_string .= $sorted_letters[$i];
+        }
+        for ($i = 0; $i < count($reindexed_numeric_array); $i++) {
+            $sorted_string .= $reindexed_numeric_array[$i];
+        }
+        print_r($sorted_string);
 
 
         // lower are from 97 to 122, upper are from 65 to 90
