@@ -188,7 +188,7 @@ class RandomApiController extends Controller
     // mathematical expression in prefix notation as a string and evaluates the expression.
 
 
-    function evalPrefix($string = "+ 5 4")
+    function evalPrefix($string = "+ 4 - * 3 2 5")
     {
         // I am calling the recursive function
         $value = $this->recursive_evalPrefix($string);
@@ -220,57 +220,54 @@ class RandomApiController extends Controller
             if ($no_space[$i - 2] == '+') {
                 if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
                     $result = $no_space[$i - 1] + $no_space[$i];
-                }
+                    $right_part = '';
+                    for ($j = 0; $j < $i - 2; $j++) {
+                        $right_part .= $no_space[$j];
+                    }
 
-                $right_part = '';
-                for ($j = 0; $j < $i - 2; $j++) {
-                    $right_part .= $no_space[$j];
+                    $left_part = '';
+                    for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                        $left_part .= $no_space[$j];
+                    }
+                    $new_content = $right_part . strval($result) . $left_part;
+                    return $this->recursive_evalPrefix($new_content);
                 }
-
-                $left_part = '';
-                for ($j = $i + 1; $j < strlen($no_space); $j++) {
-                    $left_part .= $no_space[$j];
-                }
-                $new_content = $right_part + strval($result) + $left_part;
-                return $this->recursive_evalPrefix($new_content);
             }
 
             // Multiplication Condition
             if ($no_space[$i - 2] == '*') {
                 if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
                     $result = $no_space[$i - 1] * $no_space[$i];
-                }
+                    $right_part = '';
+                    for ($j = 0; $j < $i - 2; $j++) {
+                        $right_part .= $no_space[$j];
+                    }
 
-                $right_part = '';
-                for ($j = 0; $j < $i - 2; $j++) {
-                    $right_part .= $no_space[$j];
+                    $left_part = '';
+                    for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                        $left_part .= $no_space[$j];
+                    }
+                    $new_content = $right_part . strval($result) . $left_part;
+                    return $this->recursive_evalPrefix($new_content);
                 }
-
-                $left_part = '';
-                for ($j = $i + 1; $j < strlen($no_space); $j++) {
-                    $left_part .= $no_space[$j];
-                }
-                $new_content = $right_part + strval($result) + $left_part;
-                return $this->recursive_evalPrefix($new_content);
             }
 
             // Subtraction Condition
             if ($no_space[$i - 2] == '-') {
                 if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
                     $result = $no_space[$i - 1] - $no_space[$i];
-                }
+                    $right_part = '';
+                    for ($j = 0; $j < $i - 2; $j++) {
+                        $right_part .= $no_space[$j];
+                    }
 
-                $right_part = '';
-                for ($j = 0; $j < $i - 2; $j++) {
-                    $right_part .= $no_space[$j];
+                    $left_part = '';
+                    for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                        $left_part .= $no_space[$j];
+                    }
+                    $new_content = $right_part . strval($result) . $left_part;
+                    return $this->recursive_evalPrefix($new_content);
                 }
-
-                $left_part = '';
-                for ($j = $i + 1; $j < strlen($no_space); $j++) {
-                    $left_part .= $no_space[$j];
-                }
-                $new_content = $right_part + strval($result) + $left_part;
-                return $this->recursive_evalPrefix($new_content);
             }
 
             // Division Condition
@@ -287,7 +284,7 @@ class RandomApiController extends Controller
                         for ($j = $i + 1; $j < strlen($no_space); $j++) {
                             $left_part .= $no_space[$j];
                         }
-                        $new_content = $right_part + strval($result) + $left_part;
+                        $new_content = $right_part . strval($result) . $left_part;
                         return $this->recursive_evalPrefix($new_content);
                     } else {
                         return "Please check your input";
