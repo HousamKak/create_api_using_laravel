@@ -79,7 +79,7 @@ class RandomApiController extends Controller
         // Change the letters into numbers 
         $letter_numerics = [];
         for ($i = 0; $i < count($letter_array); $i++) {
-            array_push($letter_numerics, lettersToNums($letter_array[$i]));
+            array_push($letter_numerics, lettersToNums($$reindexed_numeric_array[$i]));
         };
 
         // Sort the transformed array
@@ -95,7 +95,7 @@ class RandomApiController extends Controller
         for ($i = 0; $i < count($letter_numerics); $i++) {
             array_push($sorted_letters, numsToLetters($reindexed_letter_numerics[$i]));
         };
-    
+
         // lower are from 97 to 122, upper are from 65 to 90
         // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
         // input the letter to the mapping function, and it will output a number
