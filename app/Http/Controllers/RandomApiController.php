@@ -140,16 +140,22 @@ class RandomApiController extends Controller
     function numExplode($num)
     {
         $places = [];
-        if ($num > 0) {
-
-            $key_value = $num;
-            while ($key_value>0) {
-                $key_value = $key_value / 10;
-                array_unshift($places, $num - 10 * floor($num / 10));
-            }
+        if ($num < 0) {
+            $sign = -1;
         } else {
-            return 'hi';
+            $sign = 1;
         }
+
+        $key_value = $num;
+        $counter = 0;
+        while ($key_value > 1) {
+            array_unshift($places, $sign * ($key_value - 10 * floor($key_value / 10)) * (10 ** $counter));
+            $counter++;
+            $key_value = floor($key_value / 10);
+            print($key_value);
+            print("\n");
+        }
+
 
         return response()->json([
             "status" => "Success",
