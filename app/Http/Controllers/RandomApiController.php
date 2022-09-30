@@ -187,7 +187,26 @@ class RandomApiController extends Controller
     // Create an API that takes care of Prefix Notation Evaluation.The API receives a 
     // mathematical expression in prefix notation as a string and evaluates the expression.
 
+
     function evalPrefix($string = "+ 5 4")
     {
+        // I am calling the recursive function
+        $value = $this->recursive_evalPrefix($string);
+
+        return response()->json([
+            "status" => "Success",
+            "result" => $value
+        ]);
+    }
+
+    // Doing the function by recursion because it resembles a tree
+    function recursive_evalPrefix($string)
+    {
+        if (is_numeric($string)) {
+            return intval($string);
+        }
+        $array = explode(' ', $string);
+        for ($i = 1; $i < count($array) + 1; $i++) {
+        }
     }
 }
