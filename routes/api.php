@@ -29,8 +29,8 @@ use App\Http\Controllers\RandomApiController;
     //     })6
 ;
 // });
-Route::get("/sorting/{string}", [RandomApiController::class, 'sortString']);
-Route::get("/numplace/{num}", [RandomApiController::class, 'numExplode']);
+Route::get("/sorting/{string?}", [RandomApiController::class, 'sortString']);
+Route::get("/numplace/{num?}", [RandomApiController::class, 'numExplode']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -52,7 +52,7 @@ class RandomApiController extends Controller
     //     ]);
     // }
 
-    function sortString($string)
+    function sortString($string = "6jnM31Q")
     {
         // Seperate numbers and letters
         $numeric_array = [];
@@ -137,7 +137,7 @@ class RandomApiController extends Controller
     }
 
 
-    function numExplode($num)
+    function numExplode($num = -434)
     {
         $places = [];
         if ($num < 0) {
