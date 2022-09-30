@@ -31,16 +31,16 @@ class RandomApiController extends Controller
     // }
 
     // $name = "Laravel"
-    function sayHi()
-    {
-        $message = "HI";
-        // . $name;
+    // function sayHi()
+    // {
+    //     $message = "HI";
+    //     // . $name;
 
-        return response()->json([
-            "status" => "Success",
-            "message" => $message
-        ]);
-    }
+    //     return response()->json([
+    //         "status" => "Success",
+    //         "message" => $message
+    //     ]);
+    // }
 
     // function addUser(Request $request){
     //     $name = $request->name;
@@ -56,30 +56,48 @@ class RandomApiController extends Controller
     {
         // Seperate letters and numbers
         $numeric_array = [];
-        $upper_array = [];
-        $lower_array = [];
+        $letter_array = [];
         for ($x = 0; $x < strlen($string); $x++) {
             if (is_numeric($string[$x])) {
                 array_push($numeric_array, $string[$x]);
             }
 
             // Seperate capital letters and small letters
-            else if (ctype_upper($string[$x])) {
-
-                array_push($upper_array, $string[$x]);
-            } else {
-
-                array_push($lower_array, $string[$x]);
+            else {
+                array_push($letter_array, $string[$x]);
             }
         };
         // sort the numbers
         asort($numeric_array);
+        $uppers = range('A', 'Z');
+        $lowers = range('a', 'z');
+        for ($i = 0; $i < count($uppers); $i++) {
 
-        // sort the uppers
-        asort($upper_array);
+            print_r(lettersToNums($lowers[$i]));
+            print_r("\n");
+            print_r(lettersToNums($uppers[$i]));
+            print_r("\n");
+        };
 
-        // sort the lowers
-        asort($lower_array);
+        // lower are from 97 to 122, upper are from 65 to 90
+        // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
+        // input the letter to the mapping function, and it will output a number
+        // sort the outputs and reverse the mapping
+
+        function lettersToNums($letter)
+        {
+            $value = ord($letter);
+            if ($value < 91) {
+                return 2 * ($value - 65) + 2;
+            } else {
+                return 2 * ($value - 97) + 1;
+            }
+        }
+
+        function numsToLetters($num)
+        {
+        }
+
 
         return response()->json([
             "status" => "Success",
