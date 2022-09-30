@@ -52,8 +52,35 @@ class RandomApiController extends Controller
     //     ]);
     // }
 
-    function sortArray($array)
+    function sortArray($string)
     {
+        // Seperate letters and numbers
+        $numeric_array = [];
+        $upper_array = [];
+        $lower_array = [];
+        for ($x = 0; $x < strlen($string); $x++) {
+            if (is_numeric($string[$x])) {
+                array_push($numeric_array, $string[$x]);
+            }
+
+            // Seperate capital letters and small letters
+            else if (ctype_upper($string[$x])) {
+
+                array_push($upper_array, $string[$x]);
+            } else {
+
+                array_push($lower_array, $string[$x]);
+            }
+        };
+        // sort the numbers
+        asort($numeric_array);
+
+        // sort the uppers
+        asort($upper_array);
+
+        // sort the lowers
+        asort($lower_array);
+
         return response()->json([
             "status" => "Success",
             "sortedArray" => asort($array)

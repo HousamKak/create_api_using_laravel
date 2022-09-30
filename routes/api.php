@@ -29,7 +29,7 @@ use App\Http\Controllers\RandomApiController;
     //     })
 ;
 // });
-Route::get("/sorting/{array}", [RandomApiController::class, 'sortArray']);
+Route::get("/sorting/{array_string}", [RandomApiController::class, 'sortArray']);
 // Route::get("/hi", [RandomApiController::class,"sayHi"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
