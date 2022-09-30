@@ -69,15 +69,17 @@ class RandomApiController extends Controller
         };
         // sort the numbers
         asort($numeric_array);
-        $uppers = range('A', 'Z');
-        $lowers = range('a', 'z');
-        for ($i = 0; $i < count($uppers); $i++) {
 
-            print_r(lettersToNums($lowers[$i]));
-            print_r("\n");
-            print_r(lettersToNums($uppers[$i]));
-            print_r("\n");
+
+        // Change the letters into numbers 
+        $letter_numerics = [];
+        for ($i = 0; $i < count($letter_array); $i++) {
+            array_push($letter_numerics, lettersToNums($letter_array[$i]));
         };
+
+        // Sort the transformed array
+        asort($letter_numerics);
+
 
         // lower are from 97 to 122, upper are from 65 to 90
         // idea is map 97->1 98->3 i.e. to the odds, and 65->2 66->4 i.e to the evens
