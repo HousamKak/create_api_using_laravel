@@ -143,7 +143,7 @@ class RandomApiController extends Controller
     function numToBinary($string = "My father was born in 1974.10.25.")
     {
         // Initialize an empty string that will follow with the initial string
-        $new_string = "";
+        $no_space = "";
         // Initialize a counter that will reset every time we hit a new consequetive sequence of numbers
         $counter = 0;
         // Loop over the string
@@ -165,7 +165,7 @@ class RandomApiController extends Controller
                 // we reset the counter for this process to repeat
                 if (!is_numeric($string[$i])) {
                     $decimal = intval($num);
-                    $new_string .= decbin($decimal);
+                    $no_space .= decbin($decimal);
                     $counter = 0;
                 } else {
                     continue;
@@ -173,13 +173,13 @@ class RandomApiController extends Controller
             }
             // If we don't hit a numeric, we append the string to our new constructed string
             else {
-                $new_string .= $string[$i - 1];
+                $no_space .= $string[$i - 1];
             }
         }
 
         return response()->json([
             "status" => "Success",
-            "toBinary" => $new_string
+            "toBinary" => $no_space
         ]);
     }
 
@@ -209,39 +209,86 @@ class RandomApiController extends Controller
         // Removing spaces from the string
         $array = explode(' ', $string);
         // Constructing a new string
-        $new_string = '';
+        $no_space = '';
         for ($i = 0; $i < count($array); $i++) {
-            $new_string .= $array[$i];
+            $no_space .= $array[$i];
         }
         // 
-        for ($i = 2; $i <= strlen($new_string); $i++) {
+        for ($i = 2; $i <= strlen($no_space); $i++) {
 
             // Addition Condition
-            if ($new_string[$i - 2] == '+') {
-                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
-                    $result = $new_string[$i - 1] + $new_string[$i];
+            if ($no_space[$i - 2] == '+') {
+                if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
+                    $result = $no_space[$i - 1] + $no_space[$i];
                 }
+
+                $right_part = '';
+                for ($j = 0; $j < $i - 2; $j++) {
+                    $right_part .= $no_space[$j];
+                }
+
+                $left_part = '';
+                for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                    $left_part .= $no_space[$j];
+                }
+                $new_content = $right_part + strval($result) + $left_part;
+                return $this->recursive_evalPrefix($new_content);
             }
 
             // Multiplication Condition
-            if ($new_string[$i - 2] == '*') {
-                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
-                    $result = $new_string[$i - 1] * $new_string[$i];
+            if ($no_space[$i - 2] == '*') {
+                if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
+                    $result = $no_space[$i - 1] * $no_space[$i];
                 }
+
+                $right_part = '';
+                for ($j = 0; $j < $i - 2; $j++) {
+                    $right_part .= $no_space[$j];
+                }
+
+                $left_part = '';
+                for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                    $left_part .= $no_space[$j];
+                }
+                $new_content = $right_part + strval($result) + $left_part;
+                return $this->recursive_evalPrefix($new_content);
             }
 
             // Subtraction Condition
-            if ($new_string[$i - 2] == '-') {
-                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
-                    $result = $new_string[$i - 1] - $new_string[$i];
+            if ($no_space[$i - 2] == '-') {
+                if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
+                    $result = $no_space[$i - 1] - $no_space[$i];
                 }
+
+                $right_part = '';
+                for ($j = 0; $j < $i - 2; $j++) {
+                    $right_part .= $no_space[$j];
+                }
+
+                $left_part = '';
+                for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                    $left_part .= $no_space[$j];
+                }
+                $new_content = $right_part + strval($result) + $left_part;
+                return $this->recursive_evalPrefix($new_content);
             }
 
             // Division Condition
-            if ($new_string[$i - 2] == '/') {
-                if (is_numeric($new_string[$i - 1]) && is_numeric($new_string[$i])) {
-                    if ($new_string[$i] != 0) {
-                        $result = $new_string[$i - 1] / $new_string[$i];
+            if ($no_space[$i - 2] == '/') {
+                if (is_numeric($no_space[$i - 1]) && is_numeric($no_space[$i])) {
+                    if ($no_space[$i] != 0) {
+                        $result = $no_space[$i - 1] / $no_space[$i];
+                        $right_part = '';
+                        for ($j = 0; $j < $i - 2; $j++) {
+                            $right_part .= $no_space[$j];
+                        }
+
+                        $left_part = '';
+                        for ($j = $i + 1; $j < strlen($no_space); $j++) {
+                            $left_part .= $no_space[$j];
+                        }
+                        $new_content = $right_part + strval($result) + $left_part;
+                        return $this->recursive_evalPrefix($new_content);
                     } else {
                         return "Please check your input";
                     }
