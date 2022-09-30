@@ -139,7 +139,7 @@ class RandomApiController extends Controller
 
 
     // The Third API:
-    // "My father was born in 1974.10.25."
+    // Create an API that translates from Human to Programer by replacing the numbers in a string with their binary form.s
     function numToBinary($string = "My father was born in 1974.10.25.")
     {
         // Initialize an empty string that will follow with the initial string
@@ -181,5 +181,13 @@ class RandomApiController extends Controller
             "status" => "Success",
             "toBinary" => $new_string
         ]);
+    }
+
+    // Fourth API:
+    // Create an API that takes care of Prefix Notation Evaluation.The API receives a 
+    // mathematical expression in prefix notation as a string and evaluates the expression.
+
+    function evalPrefix($string = "+ 5 4")
+    {
     }
 }
