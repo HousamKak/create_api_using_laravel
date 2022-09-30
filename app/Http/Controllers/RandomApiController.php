@@ -79,7 +79,7 @@ class RandomApiController extends Controller
         // Change the letters into numbers 
         $letter_numerics = [];
         for ($i = 0; $i < count($letter_array); $i++) {
-            array_push($letter_numerics, lettersToNums($letter_array[$i]));
+            array_push($letter_numerics, $this->lettersToNums($letter_array[$i]));
         };
 
         // Sort the transformed array
@@ -93,7 +93,7 @@ class RandomApiController extends Controller
         // Inverting the numerics to letters
         $sorted_letters = [];
         for ($i = 0; $i < count($letter_numerics); $i++) {
-            array_push($sorted_letters, numsToLetters($reindexed_letter_numerics[$i]));
+            array_push($sorted_letters, $this->numsToLetters($reindexed_letter_numerics[$i]));
         };
 
         // Combine into one string
@@ -104,7 +104,6 @@ class RandomApiController extends Controller
         for ($i = 0; $i < count($reindexed_numeric_array); $i++) {
             $sorted_string .= $reindexed_numeric_array[$i];
         }
-        print_r($sorted_string);
 
 
         // lower are from 97 to 122, upper are from 65 to 90
@@ -112,28 +111,28 @@ class RandomApiController extends Controller
         // input the letter to the mapping function, and it will output a number
         // sort the outputs and reverse the mapping
 
-        function lettersToNums($letter)
-        {
-            $value = ord($letter);
-            if ($value < 91) {
-                return 2 * ($value - 65) + 2;
-            } else {
-                return 2 * ($value - 97) + 1;
-            }
-        }
-
-        function numsToLetters($num)
-        {
-            if ($num % 2 == 0) {
-                return chr(($num - 2) / 2 + 65);
-            } else {
-                return chr(($num - 1) / 2 + 97);
-            }
-        }
-
         return response()->json([
             "status" => "Success",
-            "sortedArray" => asort($array)
+            "sortedArray" => $sorted_string
         ]);
+    }
+
+    function lettersToNums($letter)
+    {
+        $value = ord($letter);
+        if ($value < 91) {
+            return 2 * ($value - 65) + 2;
+        } else {
+            return 2 * ($value - 97) + 1;
+        }
+    }
+
+    function numsToLetters($num)
+    {
+        if ($num % 2 == 0) {
+            return chr(($num - 2) / 2 + 65);
+        } else {
+            return chr(($num - 1) / 2 + 97);
+        }
     }
 }
